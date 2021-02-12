@@ -1,5 +1,5 @@
 from flask import render_template, request
-from app import app, db, json
+from app import app, db
 from app.models import Records
 import requests
 
@@ -7,8 +7,11 @@ import requests
 
 @app.route("/")
 def index():
-    return "Hello"
+    return "Hi!"
 
+@app.route("/trash/<id>")
+def trash(id):
+    return str(Records.query.filter_by(id=id).paginate().items[0])
 
 @app.route("/update")
 def get_new_data():
