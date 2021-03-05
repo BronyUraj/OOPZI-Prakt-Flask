@@ -1,17 +1,28 @@
-from flask import render_template, request
+from flask import render_template, request, url_for
 from app import app, db
 from app.models import Records
 import requests
-
 
 
 @app.route("/")
 def index():
     return "Hi!"
 
-@app.route("/trash/<id>")
-def trash(id):
-    return str(Records.query.filter_by(id=id).paginate().items[0])
+
+@app.route("/trash")
+def trash():
+    page = request.args.get("page", 1, type=int)
+    trash = Records.query.paginate(page, app.config["RECORD_PER_PAGE"], False)
+    next_url = url_for("trash", page=trash.next_num) if trash.has_next else None
+    prev_url = url_for("trash", page=trash.prev_num) if trash.has_prev else None
+    return render_template(
+        "trash.html",
+        title="Trash",
+        trash=trash.items,
+        next_url=next_url,
+        prev_url=prev_url,
+    )
+
 
 @app.route("/update")
 def get_new_data():

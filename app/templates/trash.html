@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+</head>
+<body>
+<table style="width:100%">
+  <tr>
+    <th id="YardName">Название</th>
+    <th id="AdmArea">Район</th>
+    <th id="District">Округ</th>
+    <th id="YardArea">Площадь</th>
+    <th id="YardType">Тип</th>
+    <th id="Coordinates">Координаты</th>
+  </tr>
+  {% for trashx in trash %}
+    <td headers="YardName">{{ trashx.YardName }}</td>
+    <td headers="AdmArea">{{ trashx.AdmArea }}</td>
+    <td headers="District">{{ trashx.District }}</td>
+    <td headers="YardArea">{{ trashx.YardArea }}</td>
+    <td headers="YardType">{{ trashx.YardType }}</td>
+    <td headers="Coordinates">{{ trashx.Coordinates }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<a href="{{ prev_url or '#' }}"><p style="text-align: center"{% if not prev_url %} disabled{% endif %} ><button>Назад</button></a>
+<a href="{{ next_url or '#' }}"><p style="text-align: center"{% if not next_url %} disabled{% endif %} ><button>Вперед</button></a>
+</body>
+</html>
